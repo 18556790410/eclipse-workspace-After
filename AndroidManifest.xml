@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="zd.after"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/TranslucentTheme"
+        android:allowTaskReparenting="false"
+        android:persistent="true" >
+        <activity
+            android:name=".SDK_WebApp"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="zd.after.AlarmActivity"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar">
+        </activity>
+        
+        <receiver android:name="zd.after.AlarmReceiver" >
+            <intent-filter>
+                <action android:name="zd.after.openAlarmServer"/>
+            </intent-filter>            
+        </receiver>
+        
+        <receiver android:name="zd.after.AfterWidgetProvider">
+            <meta-data 
+                android:name="android.appwidget.provider"
+                android:resource="@xml/after_widget_info"/>
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="zd.after.awakenApp"/>
+            </intent-filter>
+        </receiver>
+        
+        <receiver android:name="zd.after.SystemStartReceiver">
+           	<intent-filter>
+           	    <action android:name="android.intent.action.BOOT_COMPLETED"/>
+           	</intent-filter>
+        </receiver>
+        
+        <service android:name="zd.after.AfterWidgetService"></service>
+    </application>
+
+</manifest>

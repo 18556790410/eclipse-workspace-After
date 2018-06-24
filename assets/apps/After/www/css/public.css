@@ -1,0 +1,283 @@
+body{
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+iframe{
+    margin: 0;
+    border: 0;
+}
+ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+input{
+    outline: none;
+    padding: 0;
+}
+a{
+    outline: none;
+    text-decoration: none;
+    color: black;
+}
+textarea{
+    outline: none;
+    padding: 0;
+}
+select{
+    outline: none;
+}
+/*50%高度*/
+.halfHeight{
+    height: 50%;
+}
+/*100%高度*/
+.fullHeight{
+    height: 100%;
+}
+/*50%宽度*/
+.halfWidth{
+    width: 50%;
+}
+/*100%宽度*/
+.fullWidth{
+    width: 100%;
+}
+/*flex,yCenter,xCenter*/
+.flexCC{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*flex,yCenter,xStart*/
+.flexCS{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+/*flex,yCenter,xEnd*/
+.flexCE{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+/*flex,yEnd,xStart*/
+.flexES{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+/*flex,yEnd,xCenter*/
+.flexEC{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+/*flex,yEnd,xEnd*/
+.flexEE{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+/*flex,yStart,xStart*/
+.flexSS{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+/*flex,yStart,xCenter*/
+.flexSC{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+/*flex,yStart,xEnd*/
+.flexSE{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+/*隐藏控件*/
+.disPlayNone{
+    display: none;
+}
+.light{
+    opacity: 0.7;
+}
+.waller{
+    position: absolute;
+}
+.disabledWaller{
+    background-color: #454545;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+}
+.tip{
+    background-color: #aaaaaa;
+    height: 10%;
+    width: 70%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    color: white;
+    z-index: 1000;
+}
+
+/*--------------------------------------自定义动画*/
+
+/*字体颜色从黑色变为绿色*/
+@keyframes colorB2G {
+    from{
+        color: black;
+    }
+    to{
+        color: #458B00;
+    }
+}
+/*字体颜色从绿色变为白色、背景从透明变成绿色*/
+@keyframes bgColorT2G_colorG2W {
+    from {
+        background-color: transparent;
+        color: #458B00;
+    }
+    to {
+        background-color: #458B00;
+        color: white;
+    }
+}
+/*字体颜色从白色变为绿色、背景从透明变成白色*/
+@keyframes bgColorT2W_colorW2G {
+    from {
+        background-color: transparent;
+        color: white;
+    }
+    to {
+        background-color: white;
+        color: #458B00;
+    }
+}
+/*字体颜色从绿色变为白色、背景从白色变成绿色*/
+@keyframes bgColorW2G_colorG2W {
+    from {
+        background-color: white;
+        color: #458B00;
+    }
+    to {
+        background-color: #458B00;
+        color: white;
+    }
+}
+/*变透明*/
+@keyframes opacityLight {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.7;
+    }
+}
+/*边框颜色从白色变为红色，字体颜色从绿色变为红色*/
+@keyframes borderColorW2R_colorG2R {
+    from {
+        border-color: white;
+        color: #458B00;
+    }
+    to {
+        border-color: red;
+        color: red;
+    }
+}
+/*边框颜色从烟白色变为绿色，字体颜色从黑色变为绿色*/
+@keyframes borderColorWS2G_colorB2G {
+    from {
+        border-color: whitesmoke;
+        color: black;
+    }
+    to {
+        border-color: #458B00;
+        color: #458B00;
+    }
+}
+/*字体颜色从白色变为绿色*/
+@keyframes colorW2G {
+    from {
+        color: white;
+    }
+    to {
+        color: #458B00;
+    }
+}
+/*背景颜色从透明变为白色，字体颜色从白色变为绿色*/
+@keyframes bgColorT2W_colorW2G {
+    from{
+        color: white;
+        background-color: transparent;
+    }
+    to{
+        color: #458B00;
+        background-color: white;
+    }
+}
+/*背景颜色从绿色变为白色，字体颜色从白色变为绿色*/
+@keyframes bgColorG2W_colorW2G {
+    from{
+        color: white;
+        background-color: #458B00;
+    }
+    to{
+        color: #458B00;
+        background-color: white;
+    }
+}
+
+
+
+
+/*!*-----------------------------------图标*!*/
+/*.icon{*/
+    /*background: url("../img/icon.png") no-repeat;*/
+    /*width: 40px;*/
+    /*height: 40px;*/
+/*}*/
+/*.icon-ManagementW{*/
+    /*background-position: 0 0;*/
+/*}*/
+/*.icon-ManagementG{*/
+    /*background-position: 0 -40px;*/
+/*}*/
+/*.icon-WriteW{*/
+    /*background-position: -40px 0;*/
+/*}*/
+/*.icon-WriteG{*/
+    /*background-position: -40px -40px;*/
+/*}*/
+/*.icon-filmW{*/
+    /*background-position: -80px 0;*/
+/*}*/
+/*.icon-filmG{*/
+    /*background-position: -80px -40px;*/
+/*}*/
+/*.icon-pictureW{*/
+    /*background-position: -120px 0;*/
+/*}*/
+/*.icon-pictureG{*/
+    /*background-position: -120px -40px;*/
+/*}*/
+/*.icon-storeW{*/
+    /*background-position: -160px 0;*/
+/*}*/
+/*.icon-storeG{*/
+    /*background-position: -160px -40px;*/
+/*}*/
+/*.icon-addW{*/
+    /*background-position: -200px 0;*/
+/*}*/
+/*.icon-addG{*/
+    /*background-position: -200px -40px;*/
+/*}*/

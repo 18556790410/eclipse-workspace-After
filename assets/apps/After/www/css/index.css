@@ -1,0 +1,144 @@
+body{
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: rgb(56,87,35);
+}
+
+.latest{
+    background-color: rgb(84,130,53);
+    width: 94%;
+    height: 200px;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 13px;
+    margin: 0 auto;
+    box-shadow: black 0 0 15px;
+    color: white;
+}
+
+.latestTip{
+    height: 45%;
+    font-size: 2em;
+}
+
+.latestTime{
+    font-size: 3em;
+    color: yellow;
+}
+
+.clocks{
+    width: 94%;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+.clock{
+    margin-top: 10px;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+.clock:first-child{
+    margin-top: 25px;
+}
+
+.info{
+    height: 80px;
+}
+.time{
+    font-size: 2.5em;
+}
+.stateOp{
+    position: absolute;
+    right: 0;
+}
+.on,
+.off{
+    width: 60px;
+    height: 25px;
+    border-radius: 100px;
+    border: 1px solid white;
+}
+.boll{
+    width: 23px;
+    height: 23px;
+    background-color: white;
+    border-radius: 100px;
+}
+.bollTip{
+    width: 35px;
+}
+
+.details{
+    height: 300px;
+}
+
+.details li{
+    height: 49px;
+    border-bottom: 1px dashed white;
+}
+
+.details li:last-child{
+    border: 0;
+}
+
+.date,
+.freq,
+.vibrate,
+.ring,
+.introduction{
+    position: absolute;
+    right: 0;
+    white-space: pre;
+    word-break: break-all;
+}
+
+
+
+.addFrame{
+    width: 94%;
+    height: 35%;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto auto;
+    background-color: #EBEBEB;
+    font-size: 2em;
+    color: #aaaaaa;
+}
+
+.affFrameFontSizeSmall{
+	font-size: 1.2em;
+}
+
+.addTimeFrame,
+.addDateFrame{
+    height: 35%;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.add{
+    height: 30%;
+    font-size: 1em;
+}
+
+.addBtn{
+    width: 80px;
+    height: 80px;
+    border-radius: 80px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    margin: 0 auto;
+    background-color: rgb(84,130,53);
+    color: white;
+    font-size: 35px;
+    box-shadow: black 0 0 15px;
+}
