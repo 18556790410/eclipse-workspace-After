@@ -65,7 +65,6 @@ public class AfterWidgetProvider extends AppWidgetProvider{
 		Intent afterWidgetServiceIntent = new Intent(context,AfterWidgetService.class);
 		context.stopService(afterWidgetServiceIntent);
 		context.startService(afterWidgetServiceIntent);
-		
 	}
 
 	
