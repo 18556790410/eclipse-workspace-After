@@ -62,6 +62,10 @@ public class AfterWidgetProvider extends AppWidgetProvider{
 		remoteViews.setOnClickPendingIntent(R.id.after_widget, pi);
 		appWidgetManager.updateAppWidget(appWidgetIds[0], remoteViews);
 		
+		Intent afterWidgetServiceIntent = new Intent(context,AfterWidgetService.class);
+		context.stopService(afterWidgetServiceIntent);
+		context.startService(afterWidgetServiceIntent);
+		
 	}
 
 	
