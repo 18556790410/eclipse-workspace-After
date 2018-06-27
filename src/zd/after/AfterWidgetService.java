@@ -21,6 +21,9 @@ public class AfterWidgetService extends Service{
 	private Timer timer = null;
 	private SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 	
+	private static int next = 0;
+	
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -50,12 +53,16 @@ public class AfterWidgetService extends Service{
 	}
 	
 	private void sendAfterWidgetBroadcast(){
-		RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.after_widget);
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
-		ComponentName cn = new ComponentName(getApplicationContext(), AfterWidgetProvider.class);
-		String time = df.format(new Date());
-		remoteViews.setTextViewText(R.id.after_widget, time);
-		appWidgetManager.updateAppWidget(cn, remoteViews);
+		if (0 == next) {
+			next = 1;
+			RemoteViews remoteViews = new RemoteViews(getPackageName(),R.layout.after_widget);
+			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
+			ComponentName cn = new ComponentName(getApplicationContext(), AfterWidgetProvider.class);
+			String time = df.format(new Date());
+			remoteViews.setTextViewText(R.id.after_widget, time);
+			appWidgetManager.updateAppWidget(cn, remoteViews);
+			next = 0;
+		}
 	}
 	
 }
