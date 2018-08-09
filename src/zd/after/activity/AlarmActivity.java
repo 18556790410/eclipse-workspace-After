@@ -1,12 +1,17 @@
-package zd.after;
+package zd.after.activity;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -14,15 +19,25 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.os.PowerManager.WakeLock;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import zd.after.SDK_WebApp;
+import zd.after.R.drawable;
 import zd.after.model.Clock;
 import zd.after.server.ClockServer;
 import zd.after.server.impl.ClockServerImpl;
 import zd.after.util.FileUtil;
 import zd.after.util.RingTimeUtil;
+import zd.after.util.ToastUtil;
 
+@SuppressLint("NewApi")
 public class AlarmActivity extends Activity{
+	
+	private static int STATE = 0;
+	private int targetID;
+	private NotificationManager targetNM;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -33,6 +48,7 @@ public class AlarmActivity extends Activity{
 
 		Intent intent = getIntent();
 		final int id = intent.getIntExtra("id",-1);
+		targetID = id;
 		
 		final ClockServer server = new ClockServerImpl(this);
 		Clock clock = server.getClockById(id);
@@ -42,6 +58,8 @@ public class AlarmActivity extends Activity{
 		int vibrate = clock.getVibrate();
 		String wholeSoundName = clock.getSound();
 		String introduction = clock.getIntroduction();
+		
+		
 		//-----------------------------------------唤醒屏幕-------------------------------------
 		PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
 		final WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP|PowerManager.SCREEN_DIM_WAKE_LOCK,"AlarmReceiver");
@@ -68,7 +86,19 @@ public class AlarmActivity extends Activity{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		//-----------------------------------------弹出通知栏-----------------------------------
+		final NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+		targetNM = nm;
+		Notification.Builder nb = new Notification.Builder(this);
+		PendingIntent nintent = PendingIntent.getActivity(this,0, new Intent().
+				setComponent(new ComponentName(this, SDK_WebApp.class))
+				.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED), 0);
+		nb.setContentTitle(ringTime.split(" ")[1])
+		.setContentText(null)
+		.setSmallIcon(drawable.icon)
+		.setContentIntent(nintent);		
+		Notification notification = nb.build();
+		nm.notify(0, notification);
 		//-------------------------------------------对话框---------------------------------------
 		final Timer t = new Timer();
 		
@@ -86,6 +116,8 @@ public class AlarmActivity extends Activity{
 				setMediaVolume(audioManager, currentVolume);
 				wl.release();
 				t.cancel();
+				nm.cancel(0);
+				STATE = 1;
 				onDestroy();
 			}
 		});
@@ -93,16 +125,29 @@ public class AlarmActivity extends Activity{
 			
 			@Override
 			public void onClick(DialogInterface arg0, int arg1) {
-				String rightTime = RingTimeUtil.waitMs(ringTime, 5);
+				String rightTime = RingTimeUtil.waitMs(ringTime, freq, 5);
 				server.updateRingTime(id, rightTime);
 				closePlayer(player);
 				vibrator.cancel();
 				setMediaVolume(audioManager, currentVolume);
 				wl.release();
 				t.cancel();
+				nm.cancel(0);
+				STATE = 2;
 				onDestroy();
 			}
 		});
+		builder.setOnKeyListener(new OnKeyListener() {
+			
+			@Override
+			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+				if (KeyEvent.KEYCODE_BACK == keyCode) {
+					ToastUtil.showToast(AlarmActivity.this, "直面你的抉择！");
+				}
+				return false;
+			}
+		});
+		builder.setCancelable(false);
 		final AlertDialog dialog = builder.create();
 		dialog.show();
 		
@@ -112,18 +157,21 @@ public class AlarmActivity extends Activity{
 			@Override
 			public void run() {
 				if (dialog.isShowing()) {
-					String rightTime = RingTimeUtil.waitMs(ringTime, 5);
+					String rightTime = RingTimeUtil.waitMs(ringTime,freq, 5);
 					server.updateRingTime(id, rightTime);
 					dialog.dismiss();
 					closePlayer(player);
 					vibrator.cancel();
 					setMediaVolume(audioManager, currentVolume);
 					wl.release();
+					nm.cancel(0);
+					STATE = 2;
 					onDestroy();
 				}
 				
 			}
 		}, 1000*90);
+		
 	}
 	
 	//关闭音乐播放器
@@ -143,11 +191,24 @@ public class AlarmActivity extends Activity{
 	}
 		
 
+
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
+		if (0 == STATE) {
+			ClockServer server = new ClockServerImpl(this);
+			Clock clock = server.getClockById(targetID);
+			
+			String ringTime = clock.getRingTime();
+			ringTime = RingTimeUtil.waitMs(ringTime,clock.getFreq(), 5);
+			server.updateRingTime(targetID, ringTime);
+		}
+		targetNM.cancel(0);
 		finish();
+		super.onDestroy();
 	}
-
 	
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		return false;
+	}
 }

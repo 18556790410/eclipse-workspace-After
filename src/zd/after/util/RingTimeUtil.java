@@ -29,13 +29,18 @@ public class RingTimeUtil {
 	}
 	
 	@SuppressLint("SimpleDateFormat")
-	public static String waitMs(String ringTime,int ms){
+	public static String waitMs(String ringTime,int freq,int ms){
 		Calendar c = Calendar.getInstance();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String time = null;
 		try {
 			Date now = c.getTime();
 			Date targetDate = df.parse(ringTime);
+			if (now.before(targetDate)) {
+				c.setTime(targetDate);
+				c.add(Calendar.DAY_OF_MONTH, -freq);
+				targetDate = c.getTime();
+			}
 			while (now.after(targetDate)) {
 				c.setTime(targetDate);
 				c.add(Calendar.MINUTE, ms);

@@ -137,6 +137,9 @@ public class ClockServerImpl implements ClockServer{
 		ClockDao clockDao = new ClockDaoImpl(context);
 		clockDao.updateState(id, state);
 		Clock clock = clockDao.getClockById(id);
+		String ringTime = RingTimeUtil.getRightTime(clock.getRingTime(), clock.getFreq());
+		clockDao.updateRingTime(id, ringTime);
+		clock = clockDao.getClockById(id);
 		AlarmUtil alarmUtil = new AlarmUtil(context);
 		if (0 == state) {
 			//关闭闹铃服务

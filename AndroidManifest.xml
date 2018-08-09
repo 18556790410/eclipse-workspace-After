@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:allowBackup="true"
@@ -32,18 +33,18 @@
         </activity>
         
         <activity
-            android:name="zd.after.AlarmActivity"
+            android:name="zd.after.activity.AlarmActivity"
             android:excludeFromRecents="true"
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar">
         </activity>
         
-        <receiver android:name="zd.after.AlarmReceiver" >
+        <receiver android:name="zd.after.receiver.AlarmReceiver" >
             <intent-filter>
                 <action android:name="zd.after.openAlarmServer"/>
             </intent-filter>            
         </receiver>
         
-        <receiver android:name="zd.after.AfterWidgetProvider">
+        <receiver android:name="zd.after.provider.AfterWidgetProvider">
             <meta-data 
                 android:name="android.appwidget.provider"
                 android:resource="@xml/after_widget_info"/>
@@ -53,13 +54,13 @@
             </intent-filter>
         </receiver>
         
-        <receiver android:name="zd.after.SystemStartReceiver">
+        <receiver android:name="zd.after.receiver.SystemStartReceiver">
            	<intent-filter>
            	    <action android:name="android.intent.action.BOOT_COMPLETED"/>
            	</intent-filter>
         </receiver>
         
-        <service android:name="zd.after.AfterWidgetService"></service>
+        <service android:name="zd.after.service.AfterWidgetService"></service>
     </application>
 
 </manifest>

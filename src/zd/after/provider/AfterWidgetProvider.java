@@ -1,4 +1,4 @@
-package zd.after;
+package zd.after.provider;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RemoteViews;
+import zd.after.R;
+import zd.after.SDK_WebApp;
+import zd.after.service.AfterWidgetService;
 
 public class AfterWidgetProvider extends AppWidgetProvider{
 	
